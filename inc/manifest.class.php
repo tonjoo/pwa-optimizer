@@ -48,7 +48,7 @@ class TONJOO_PWA_MANIFEST {
 			add_action( 'wp_head', array( $this, 'addLinkToHead' ), 10 );
 			add_action( 'wp_footer', array( $this, 'install_prompt' ), 20 );
 
-			add_action( 'add_option_tonjoo_pwa_manifest', array( $this, 'updated_option' ), 10, 3 );
+			add_action( 'add_option_tonjoo_pwa_manifest', array( $this, 'added_option' ), 10, 2 );
 			add_action( 'update_option_tonjoo_pwa_manifest', array( $this, 'updated_option' ), 10, 3 );
 		}
 	}
@@ -83,7 +83,9 @@ class TONJOO_PWA_MANIFEST {
 		<?php 
 	}
 
-	public function updated_option( $old_value, $value, $option ){
+	public function added_option( $option, $value ){}
+
+	public function updated_option( $old_value, $new_value, $option ){
 		global $wp_query;
 
 		$app_name 			= get_bloginfo('name');
@@ -96,107 +98,107 @@ class TONJOO_PWA_MANIFEST {
 		$bg_color 			= '#ffffff';
 		$related_apps 		= [];
 
-		if( isset( $this->options['manifest']['status'] ) && 'on' == $this->options['manifest']['status'] ){ 
-			if( isset( $this->options['manifest']['app_name'] ) && !empty( $this->options['manifest']['app_name'] ) ){ 
-				$app_name = $this->options['manifest']['app_name'];
+		if( isset( $new_value['status'] ) && 'on' == $new_value['status'] ){ 
+			if( isset( $new_value['app_name'] ) && !empty( $new_value['app_name'] ) ){ 
+				$app_name = $new_value['app_name'];
 			}
 
-			if( isset( $this->options['manifest']['short_name'] ) && !empty( $this->options['manifest']['short_name'] ) ){ 
-				$short_name = $this->options['manifest']['short_name'];
+			if( isset( $new_value['short_name'] ) && !empty( $new_value['short_name'] ) ){ 
+				$short_name = $new_value['short_name'];
 			}
 
-			if( isset( $this->options['manifest']['logo_48'] ) && !empty( $this->options['manifest']['logo_48'] ) ){ 
+			if( isset( $new_value['logo_48'] ) && !empty( $new_value['logo_48'] ) ){ 
 				$icons[] = array( 
-					'src' => $this->options['manifest']['logo_48'], 
+					'src' => $new_value['logo_48'], 
 					'type' => 'image/png', 
 					'sizes' => '48x48' 
 				);
 			}
 
-			if( isset( $this->options['manifest']['logo_48'] ) && !empty( $this->options['manifest']['logo_48'] ) ){ 
+			if( isset( $new_value['logo_48'] ) && !empty( $new_value['logo_48'] ) ){ 
 				$icons[] = array( 
-					'src' => $this->options['manifest']['logo_48'], 
+					'src' => $new_value['logo_48'], 
 					'type' => 'image/png', 
 					'sizes' => '96x96' 
 				);
 			}
 
-			if( isset( $this->options['manifest']['logo_128'] ) && !empty( $this->options['manifest']['logo_128'] ) ){ 
+			if( isset( $new_value['logo_128'] ) && !empty( $new_value['logo_128'] ) ){ 
 				$icons[] = array( 
-					'src' => $this->options['manifest']['logo_128'], 
+					'src' => $new_value['logo_128'], 
 					'type' => 'image/png', 
 					'sizes' => '128x128' 
 				);
 			}
 
-			if( isset( $this->options['manifest']['logo_144'] ) && !empty( $this->options['manifest']['logo_144'] ) ){ 
+			if( isset( $new_value['logo_144'] ) && !empty( $new_value['logo_144'] ) ){ 
 				$icons[] = array( 
-					'src' => $this->options['manifest']['logo_144'], 
+					'src' => $new_value['logo_144'], 
 					'type' => 'image/png', 
 					'sizes' => '144x144' 
 				);
 			}
 
-			if( isset( $this->options['manifest']['logo_152'] ) && !empty( $this->options['manifest']['logo_152'] ) ){ 
+			if( isset( $new_value['logo_152'] ) && !empty( $new_value['logo_152'] ) ){ 
 				$icons[] = array( 
-					'src' => $this->options['manifest']['logo_152'], 
+					'src' => $new_value['logo_152'], 
 					'type' => 'image/png', 
 					'sizes' => '152x152' 
 				);
 			}
 
-			if( isset( $this->options['manifest']['logo_192'] ) && !empty( $this->options['manifest']['logo_192'] ) ){ 
+			if( isset( $new_value['logo_192'] ) && !empty( $new_value['logo_192'] ) ){ 
 				$icons[] = array( 
-					'src' => $this->options['manifest']['logo_192'], 
+					'src' => $new_value['logo_192'], 
 					'type' => 'image/png', 
 					'sizes' => '192x192' 
 				);
 			}
 
-			if( isset( $this->options['manifest']['logo_256'] ) && !empty( $this->options['manifest']['logo_256'] ) ){ 
+			if( isset( $new_value['logo_256'] ) && !empty( $new_value['logo_256'] ) ){ 
 				$icons[] = array( 
-					'src' => $this->options['manifest']['logo_256'], 
+					'src' => $new_value['logo_256'], 
 					'type' => 'image/png', 
 					'sizes' => '256x256' 
 				);
 			}
 
-			if( isset( $this->options['manifest']['logo_384'] ) && !empty( $this->options['manifest']['logo_384'] ) ){ 
+			if( isset( $new_value['logo_384'] ) && !empty( $new_value['logo_384'] ) ){ 
 				$icons[] = array( 
-					'src' => $this->options['manifest']['logo_384'], 
+					'src' => $new_value['logo_384'], 
 					'type' => 'image/png', 
 					'sizes' => '384x384' 
 				);
 			}
 
-			if( isset( $this->options['manifest']['logo_512'] ) && !empty( $this->options['manifest']['logo_512'] ) ){ 
+			if( isset( $new_value['logo_512'] ) && !empty( $new_value['logo_512'] ) ){ 
 				$icons[] = array( 
-					'src' => $this->options['manifest']['logo_512'], 
+					'src' => $new_value['logo_512'], 
 					'type' => 'image/png', 
 					'sizes' => '512x512' 
 				);
 			}
 
-			if( isset( $this->options['manifest']['app_description'] ) && !empty( $this->options['manifest']['app_description'] ) ){ 
-				$app_description = $this->options['manifest']['app_description'];
+			if( isset( $new_value['app_description'] ) && !empty( $new_value['app_description'] ) ){ 
+				$app_description = $new_value['app_description'];
 			}
 
-			if( isset( $this->options['manifest']['start_url'] ) && !empty( $this->options['manifest']['start_url'] ) ){ 
-				$start_url = $this->options['manifest']['start_url'];
+			if( isset( $new_value['start_url'] ) && !empty( $new_value['start_url'] ) ){ 
+				$start_url = $new_value['start_url'];
 			}
 
-			if( isset( $this->options['manifest']['theme_color'] ) && !empty( $this->options['manifest']['theme_color'] ) ){ 
-				$theme_color = $this->options['manifest']['theme_color'];
+			if( isset( $new_value['theme_color'] ) && !empty( $new_value['theme_color'] ) ){ 
+				$theme_color = $new_value['theme_color'];
 			}
 
-			if( isset( $this->options['manifest']['background_color'] ) && !empty( $this->options['manifest']['background_color'] ) ){ 
-				$bg_color = $this->options['manifest']['background_color'];
+			if( isset( $new_value['background_color'] ) && !empty( $new_value['background_color'] ) ){ 
+				$bg_color = $new_value['background_color'];
 			}
 
-			if( isset( $this->options['manifest']['mobile_apps'] ) && !empty( $this->options['manifest']['mobile_apps'] ) ){ 
+			if( isset( $new_value['mobile_apps'] ) && !empty( $new_value['mobile_apps'] ) ){ 
 				$related_apps[] = array( 
 					'platform' => 'play', 
-					'id' => $this->options['manifest']['mobile_apps'] 
+					'id' => $new_value['mobile_apps'] 
 				);
 			}
 		}

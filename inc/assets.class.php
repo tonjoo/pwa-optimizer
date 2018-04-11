@@ -42,8 +42,12 @@ class TONJOO_PWA_ASSETS {
 			'lazyload' 		=> get_option( 'tonjoo_pwa_lazy_load' ) 
 		);
 
-		add_action( 'add_option_tonjoo_pwa_assets', array( $this, 'updated_option' ), 10, 3 );
+		add_action( 'add_option_tonjoo_pwa_assets', array( $this, 'added_option' ), 10, 2 );
 		add_action( 'update_option_tonjoo_pwa_assets', array( $this, 'updated_option' ), 10, 3 );
+	}
+
+	public function added_option( $option, $value ) { 
+		$this->render_service_worker($value);
 	}
 
 	public function updated_option( $old_value, $new_value, $option ) { 
