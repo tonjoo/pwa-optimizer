@@ -1,0 +1,37 @@
+table.tonjoo-pwa-permissions th, 
+table.tonjoo-pwa-permissions td {
+	padding: 8px 10px;
+}
+.tonjoo-pwa-permissions th {
+	text-align: center;
+	font-weight: 400;
+	font-size: 13px;
+}
+.tonjoo-pwa-permissions thead tr th {
+	background: #CCCCCC;
+}
+.tonjoo-pwa-permissions td {
+	padding: 7px;
+	font-family: "Courier 10 Pitch",Courier,monospace;
+	color: #262626;
+	border-bottom: 1px solid #F2F2F2;
+	border-top: none;
+}
+.tonjoo-pwa-permissions .text-left {
+	text-align: left;
+}
+.tonjoo-pwa-permissions .text-center {
+	text-align: center;
+}
+.tonjoo-pwa-permissions .text-right {
+	text-align: right;
+}
+.tonjoo-pwa-permissions .text-justify {
+	text-align: justify;
+}
+.tonjoo-pwa-permissions .is-writeable {
+	background-color: #C8F18B;
+}
+.tonjoo-pwa-permissions .is-readable {
+	background-color: #FD6D73;
+}
