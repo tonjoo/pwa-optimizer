@@ -3,12 +3,12 @@
  * TONJOO_PWA_ADMIN Class.
  *
  * @class       TONJOO_PWA_ADMIN
- * @version		1.0
+ * @version     1.0
  * @author ebenhaezerbm <eben@tonjoo.com>
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
+    exit; // Exit if accessed directly
 }
 
 /**
@@ -16,28 +16,28 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class TONJOO_PWA_ADMIN {
 
-	private $settings_api;
+    private $settings_api;
 
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		$this->includes();
+    /**
+     * Constructor
+     */
+    public function __construct() {
+        $this->includes();
 
-		$this->settings_api = new TONJOO_PWA_SETTINGS;
+        $this->settings_api = new TONJOO_PWA_SETTINGS;
 
         $plugin_basename = TONJOO_PWA_PLUGIN_BASENAME;
         add_filter( "plugin_action_links_$plugin_basename", array($this, "plugin_setting_link") );
 
-		add_action( 'admin_init', array($this, 'admin_init') );
-		add_action( 'admin_menu', array($this, 'add_menu') );
+        add_action( 'admin_init', array($this, 'admin_init') );
+        add_action( 'admin_menu', array($this, 'add_menu') );
 
         add_action( 'admin_enqueue_scripts', array($this, 'admin_enqueue_scripts') );
 
         add_action( 'wp_ajax_tonjoo_pwa_change_file_or_dir_permission', array($this, 'change_file_or_dir_permission') );
-	}
+    }
 
-	/**
+    /**
      * Add setting button on plugin actions
      */
     function plugin_setting_link($links) { 
@@ -48,16 +48,16 @@ class TONJOO_PWA_ADMIN {
 
     public function add_menu(){
         add_options_page( __( 'PWA Optimizer', 'tonjoo' ), __( 'PWA Optimizer', 'tonjoo' ), 'manage_options', TONJOO_PWA_SLUG, array($this, 'admin_opt') );
-	}
+    }
 
-	public function admin_opt(){
-	 	echo '<div class="wrap">';
+    public function admin_opt(){
+        echo '<div class="wrap">';
         $this->settings_api->show_navigation();
         $this->settings_api->show_forms();
         echo '</div>';
-	}
+    }
 
-	function admin_init() {
+    function admin_init() {
         //set the settings
         $this->settings_api->set_sections( $this->get_settings_sections() );
         $this->settings_api->set_fields( $this->get_settings_fields() );
@@ -179,6 +179,7 @@ class TONJOO_PWA_ADMIN {
                         'on'    => __( 'Enable', 'tonjoo' ), 
                         'off'   => __( 'Disable', 'tonjoo' ) 
                     ), 
+                    'default'           => 'on', 
                     'type'              => 'select' 
                 ), 
                 array( 
@@ -186,7 +187,7 @@ class TONJOO_PWA_ADMIN {
                     'label'             => __( 'Never Cache Following Page', 'tonjoo' ), 
                     'desc'              => __( 'Always ignore the specified pages / directories. Supports regular expressions. Must start and end with <code>/</code>. Example: <code>/wp-admin/</code>', 'tonjoo' ), 
                     'size'              => '', 
-                    'default'           => '/wp-admin/', 
+                    'default'           => '/wp-admin(.*)|(.*)preview=true(.*)/', 
                     'type'              => 'textarea' 
                 ) 
             ), 
@@ -199,6 +200,7 @@ class TONJOO_PWA_ADMIN {
                         'on'    => __( 'Enable', 'tonjoo' ), 
                         'off'   => __( 'Disable', 'tonjoo' ) 
                     ), 
+                    'default'           => 'off', 
                     'type'              => 'select' 
                 ), 
                 array( 
@@ -313,6 +315,7 @@ class TONJOO_PWA_ADMIN {
                         'on'    => __( 'Enable', 'tonjoo' ), 
                         'off'   => __( 'Disable', 'tonjoo' ) 
                     ), 
+                    'default'           => 'on', 
                     'type'              => 'select' 
                 ), 
                 array( 
@@ -356,10 +359,10 @@ class TONJOO_PWA_ADMIN {
         return $settings_fields;
     }
 
-	public function includes(){
-		if ( !class_exists( 'TONJOO_PWA_SETTINGS' ) )
-			include_once( 'settings.class.php' );
-	}
+    public function includes(){
+        if ( !class_exists( 'TONJOO_PWA_SETTINGS' ) )
+            include_once( 'settings.class.php' );
+    }
 
 }
 

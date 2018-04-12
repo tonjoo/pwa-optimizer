@@ -61,8 +61,9 @@ class TONJOO_PWA_ASSETS {
 			unlink($filename);
 		}
 
-		$pgcache_reject = '';
-		$precache_assets = '';
+		$pgcache_reject 	= '';
+		$precache_assets 	= '';
+
 		if( isset($new_value['status']) && 'on' == $new_value['status'] ){
 			$pgcache_reject = <<< EOT
 workbox.routing.registerRoute(/wp-admin(.*)|(.*)preview=true(.*)/,
@@ -130,8 +131,9 @@ EOT;
 			$revision = md5( $this->options['offline_mode']['offline_page'] );
 		}
 
-		$precache = '';
+		$precache 		= '';
 		$offline_script = '';
+
 		if( isset($this->options['offline_mode']['status']) && 'on' == $this->options['offline_mode']['status'] ){
 			$precache = <<< EOT
 workbox.precaching.precacheAndRoute([
@@ -155,8 +157,6 @@ EOT;
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.0.0/workbox-sw.js');
 
 if (workbox) {
-	console.log(`Yay! Workbox is loaded 🎉`);
-
 	// make new service worker code available instantly
 	workbox.skipWaiting();
 	workbox.clientsClaim();

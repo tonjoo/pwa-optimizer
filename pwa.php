@@ -229,26 +229,76 @@ function render_service_worker() {
 		unlink($filename);
 	}
 
-	$pgcache_reject = '';
-	$precache_assets = '';
-	if( isset($options['assets']['status']) && 'on' == $options['assets']['status'] ){
+	$pgcache_reject 	= '';
+	$precache_assets 	= '';
+
+	if( isset($options['assets']['status']) ){
+		if( 'on' == $options['assets']['status'] ){
+			if( isset($options['assets']['pgcache_reject_uri']) && ! empty( $options['assets']['pgcache_reject_uri'] ) ){
+				$pgcache_reject_uri = explode( "\n", $options['assets']['pgcache_reject_uri'] );
+				if( $pgcache_reject_uri ) {
+					foreach ($pgcache_reject_uri as $key => $value) {
+						$pgcache_reject .= <<< EOT
+\n
+	workbox.routing.registerRoute($value, workbox.strategies.networkOnly());
+EOT;
+					}
+				}
+			} 
+
+			$precache_assets = <<< EOT
+// Stale while revalidate for JS and CSS that are not precache
+	workbox.routing.registerRoute(
+		/\.(?:js|css)$/,
+		workbox.strategies.staleWhileRevalidate({
+			cacheName: 'js-css-cache'
+		}),
+	);
+
+	// We want no more than 50 images in the cache. We check using a cache first strategy
+	workbox.routing.registerRoute(/\.(?:png|gif|jpg)$/,
+		workbox.strategies.cacheFirst({
+		cacheName: 'images-cache',
+			cacheExpiration: {
+				maxEntries: 50
+			}
+		})
+	);
+
+	// We need cache fonts if any
+	workbox.routing.registerRoute(/(.*)\.(?:woff|eot|woff2|ttf|svg)$/,
+		workbox.strategies.cacheFirst({
+		cacheName: 'external-font-cache',
+			cacheExpiration: {
+				maxEntries: 20
+			},
+			cacheableResponse: {
+				statuses: [0, 200]
+			}
+		})
+	);
+
+	workbox.routing.registerRoute(/https:\/\/fonts.googleapis.com\/(.*)/,
+		workbox.strategies.cacheFirst({
+			cacheName: 'google-font-cache',
+			cacheExpiration: {
+				maxEntries: 20
+			},
+			cacheableResponse: {statuses: [0, 200]}
+		})
+	);
+EOT;
+		}
+	} else {
+		$options['assets']['status'] = 'on';
+		$options['assets']['pgcache_reject_uri'] = '/wp-admin(.*)|(.*)preview=true(.*)/';
+		update_option( 'tonjoo_pwa_assets', $options['assets'] );
+
 		$pgcache_reject = <<< EOT
 workbox.routing.registerRoute(/wp-admin(.*)|(.*)preview=true(.*)/,
 		workbox.strategies.networkOnly()
 	);
 EOT;
-		if( isset($options['assets']['pgcache_reject_uri']) && ! empty( $options['assets']['pgcache_reject_uri'] ) ){
-			$pgcache_reject_uri = explode( "\n", $options['assets']['pgcache_reject_uri'] );
-			if( $pgcache_reject_uri ) {
-				foreach ($pgcache_reject_uri as $key => $value) {
-					$pgcache_reject .= <<< EOT
-\n
-	workbox.routing.registerRoute($value, workbox.strategies.networkOnly());
-EOT;
-				}
-			}
-		}
-
 		$precache_assets = <<< EOT
 // Stale while revalidate for JS and CSS that are not precache
 	workbox.routing.registerRoute(
@@ -298,9 +348,29 @@ EOT;
 		$revision = md5( $options['offline_mode']['offline_page'] );
 	}
 
-	$precache = '';
+	$precache 		= '';
 	$offline_script = '';
-	if( isset($options['offline_mode']['status']) && 'on' == $options['offline_mode']['status'] ){
+
+	if( isset($options['offline_mode']['status']) ){
+		if( 'on' == $options['offline_mode']['status'] ){
+			$precache = <<< EOT
+workbox.precaching.precacheAndRoute([
+		{ 
+			'url': 'offline-page.html', 
+			'revision': '{$revision}' 
+		}
+	]);
+EOT;
+
+			$offline_script = <<< EOT
+// diconvert ke es5
+	const matcher = ({event}) => event.request.mode === 'navigate';
+	const handler = (obj) => fetch(obj.event.request).catch(() => caches.match('/offline-page.html'));
+
+	workbox.routing.registerRoute(matcher, handler);
+EOT;
+		}
+	} else {
 		$precache = <<< EOT
 workbox.precaching.precacheAndRoute([
 		{ 
@@ -323,8 +393,6 @@ EOT;
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.0.0/workbox-sw.js');
 
 if (workbox) {
-	console.log(`Yay! Workbox is loaded 🎉`);
-
 	// make new service worker code available instantly
 	workbox.skipWaiting();
 	workbox.clientsClaim();
@@ -345,4 +413,29 @@ EOT;
 	fwrite( $a, $script );
 	fclose( $a );
 	chmod( $filename, 0755 );
+}
+
+register_activation_hook( __FILE__, 'render_offline_page' );
+function render_offline_page() { 
+	$options = array( 
+		'offline_mode' 	=> get_option( 'tonjoo_pwa_offline_mode' ), 
+		'assets' 		=> get_option( 'tonjoo_pwa_assets' ), 
+		'manifest' 		=> get_option( 'tonjoo_pwa_manifest' ), 
+		'lazyload' 		=> get_option( 'tonjoo_pwa_lazy_load' ) 
+	);
+
+	if( ! isset($options['offline_mode']['status']) ){
+		$options['offline_mode']['status'] = 'on';
+		$options['offline_mode']['offline_page'] = file_get_contents( tonjoo_pwa()->plugin_url() . '/src/offline-page.html' );
+		update_option( 'tonjoo_pwa_offline_mode', $options['offline_mode'] );
+	}
+
+	if( ! isset($options['offline_mode']['offline_page']) ){
+		$filename = get_home_path() . 'offline-page.html';
+
+		$a = fopen( $filename, 'w' ) or die( 'Unable to open file!. Please check your permission.' );
+		fwrite( $a, file_get_contents( tonjoo_pwa()->plugin_url() . '/src/offline-page.html' ) );
+		fclose( $a );
+		chmod( $filename, 0755 );
+	}
 }
