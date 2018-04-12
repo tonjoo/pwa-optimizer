@@ -98,13 +98,10 @@ class TONJOO_PWA_LAZYLOAD {
 
 		$type 	= str_replace("&quot;", "", $args['type'] );
 		$src 	= str_replace("&quot;", "", $args['src'] );
-		if( ! $src ) {
-			$src = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==';
-		}
 
 		if( empty($src) ) return $content;
 
-		$attr['src'] 		= $src;
+		$attr['src'] 		= 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==';
 		$attr['data-src'] 	= $src;
 
 		if( !empty( str_replace("&quot;", "", $args['alt'] ) ) ) { 
