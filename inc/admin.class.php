@@ -158,6 +158,7 @@ class TONJOO_PWA_ADMIN {
                         'on'    => __( 'Enable', 'tonjoo' ), 
                         'off'   => __( 'Disable', 'tonjoo' ) 
                     ), 
+                    'default'           => 'on', 
                     'type'              => 'select' 
                 ), 
                 array( 
@@ -165,6 +166,7 @@ class TONJOO_PWA_ADMIN {
                     'label'             => __( 'Offline Page', 'tonjoo' ), 
                     'desc'              => __( '', 'tonjoo' ), 
                     'size'              => 'pwa-editor', 
+                    'default'           => file_get_contents( tonjoo_pwa()->plugin_url() . '/src/offline-page.html' ), 
                     'type'              => 'textarea' 
                 ) 
             ), 
@@ -183,8 +185,8 @@ class TONJOO_PWA_ADMIN {
                     'name'              => 'pgcache_reject_uri', 
                     'label'             => __( 'Never Cache Following Page', 'tonjoo' ), 
                     'desc'              => __( 'Always ignore the specified pages / directories. Supports regular expressions. Must start and end with <code>/</code>. Example: <code>/wp-admin/</code>', 'tonjoo' ), 
-                    'default'           => '/wp-admin/', 
                     'size'              => '', 
+                    'default'           => '/wp-admin/', 
                     'type'              => 'textarea' 
                 ) 
             ), 
