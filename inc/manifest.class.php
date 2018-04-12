@@ -104,109 +104,107 @@ class TONJOO_PWA_MANIFEST {
 		$bg_color 			= '#ffffff';
 		$related_apps 		= [];
 
-		if( isset( $value['status'] ) && 'on' == $value['status'] ){ 
-			if( isset( $value['app_name'] ) && !empty( $value['app_name'] ) ){ 
-				$app_name = $value['app_name'];
-			}
+		if( isset( $value['app_name'] ) && !empty( $value['app_name'] ) ){ 
+			$app_name = $value['app_name'];
+		}
 
-			if( isset( $value['short_name'] ) && !empty( $value['short_name'] ) ){ 
-				$short_name = $value['short_name'];
-			}
+		if( isset( $value['short_name'] ) && !empty( $value['short_name'] ) ){ 
+			$short_name = $value['short_name'];
+		}
 
-			if( isset( $value['logo_48'] ) && !empty( $value['logo_48'] ) ){ 
-				$icons[] = array( 
-					'src' => $value['logo_48'], 
-					'type' => 'image/png', 
-					'sizes' => '48x48' 
-				);
-			}
+		if( isset( $value['logo_48'] ) && !empty( $value['logo_48'] ) ){ 
+			$icons[] = array( 
+				'src' => $value['logo_48'], 
+				'type' => 'image/png', 
+				'sizes' => '48x48' 
+			);
+		}
 
-			if( isset( $value['logo_48'] ) && !empty( $value['logo_48'] ) ){ 
-				$icons[] = array( 
-					'src' => $value['logo_48'], 
-					'type' => 'image/png', 
-					'sizes' => '96x96' 
-				);
-			}
+		if( isset( $value['logo_48'] ) && !empty( $value['logo_48'] ) ){ 
+			$icons[] = array( 
+				'src' => $value['logo_48'], 
+				'type' => 'image/png', 
+				'sizes' => '96x96' 
+			);
+		}
 
-			if( isset( $value['logo_128'] ) && !empty( $value['logo_128'] ) ){ 
-				$icons[] = array( 
-					'src' => $value['logo_128'], 
-					'type' => 'image/png', 
-					'sizes' => '128x128' 
-				);
-			}
+		if( isset( $value['logo_128'] ) && !empty( $value['logo_128'] ) ){ 
+			$icons[] = array( 
+				'src' => $value['logo_128'], 
+				'type' => 'image/png', 
+				'sizes' => '128x128' 
+			);
+		}
 
-			if( isset( $value['logo_144'] ) && !empty( $value['logo_144'] ) ){ 
-				$icons[] = array( 
-					'src' => $value['logo_144'], 
-					'type' => 'image/png', 
-					'sizes' => '144x144' 
-				);
-			}
+		if( isset( $value['logo_144'] ) && !empty( $value['logo_144'] ) ){ 
+			$icons[] = array( 
+				'src' => $value['logo_144'], 
+				'type' => 'image/png', 
+				'sizes' => '144x144' 
+			);
+		}
 
-			if( isset( $value['logo_152'] ) && !empty( $value['logo_152'] ) ){ 
-				$icons[] = array( 
-					'src' => $value['logo_152'], 
-					'type' => 'image/png', 
-					'sizes' => '152x152' 
-				);
-			}
+		if( isset( $value['logo_152'] ) && !empty( $value['logo_152'] ) ){ 
+			$icons[] = array( 
+				'src' => $value['logo_152'], 
+				'type' => 'image/png', 
+				'sizes' => '152x152' 
+			);
+		}
 
-			if( isset( $value['logo_192'] ) && !empty( $value['logo_192'] ) ){ 
-				$icons[] = array( 
-					'src' => $value['logo_192'], 
-					'type' => 'image/png', 
-					'sizes' => '192x192' 
-				);
-			}
+		if( isset( $value['logo_192'] ) && !empty( $value['logo_192'] ) ){ 
+			$icons[] = array( 
+				'src' => $value['logo_192'], 
+				'type' => 'image/png', 
+				'sizes' => '192x192' 
+			);
+		}
 
-			if( isset( $value['logo_256'] ) && !empty( $value['logo_256'] ) ){ 
-				$icons[] = array( 
-					'src' => $value['logo_256'], 
-					'type' => 'image/png', 
-					'sizes' => '256x256' 
-				);
-			}
+		if( isset( $value['logo_256'] ) && !empty( $value['logo_256'] ) ){ 
+			$icons[] = array( 
+				'src' => $value['logo_256'], 
+				'type' => 'image/png', 
+				'sizes' => '256x256' 
+			);
+		}
 
-			if( isset( $value['logo_384'] ) && !empty( $value['logo_384'] ) ){ 
-				$icons[] = array( 
-					'src' => $value['logo_384'], 
-					'type' => 'image/png', 
-					'sizes' => '384x384' 
-				);
-			}
+		if( isset( $value['logo_384'] ) && !empty( $value['logo_384'] ) ){ 
+			$icons[] = array( 
+				'src' => $value['logo_384'], 
+				'type' => 'image/png', 
+				'sizes' => '384x384' 
+			);
+		}
 
-			if( isset( $value['logo_512'] ) && !empty( $value['logo_512'] ) ){ 
-				$icons[] = array( 
-					'src' => $value['logo_512'], 
-					'type' => 'image/png', 
-					'sizes' => '512x512' 
-				);
-			}
+		if( isset( $value['logo_512'] ) && !empty( $value['logo_512'] ) ){ 
+			$icons[] = array( 
+				'src' => $value['logo_512'], 
+				'type' => 'image/png', 
+				'sizes' => '512x512' 
+			);
+		}
 
-			if( isset( $value['app_description'] ) && !empty( $value['app_description'] ) ){ 
-				$app_description = $value['app_description'];
-			}
+		if( isset( $value['app_description'] ) && !empty( $value['app_description'] ) ){ 
+			$app_description = $value['app_description'];
+		}
 
-			if( isset( $value['start_url'] ) && !empty( $value['start_url'] ) ){ 
-				$start_url = $value['start_url'];
-			}
+		if( isset( $value['start_url'] ) && !empty( $value['start_url'] ) ){ 
+			$start_url = $value['start_url'];
+		}
 
-			if( isset( $value['theme_color'] ) && !empty( $value['theme_color'] ) ){ 
-				$theme_color = $value['theme_color'];
-			}
+		if( isset( $value['theme_color'] ) && !empty( $value['theme_color'] ) ){ 
+			$theme_color = $value['theme_color'];
+		}
 
-			if( isset( $value['background_color'] ) && !empty( $value['background_color'] ) ){ 
-				$bg_color = $value['background_color'];
-			}
+		if( isset( $value['background_color'] ) && !empty( $value['background_color'] ) ){ 
+			$bg_color = $value['background_color'];
+		}
 
-			if( isset( $value['mobile_apps'] ) && !empty( $value['mobile_apps'] ) ){ 
-				$related_apps[] = array( 
-					'platform' => 'play', 
-					'id' => $value['mobile_apps'] 
-				);
-			}
+		if( isset( $value['mobile_apps'] ) && !empty( $value['mobile_apps'] ) ){ 
+			$related_apps[] = array( 
+				'platform' => 'play', 
+				'id' => $value['mobile_apps'] 
+			);
 		}
 
 		$response = array( 
