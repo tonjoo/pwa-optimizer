@@ -35,21 +35,16 @@ class TONJOO_PWA_MANIFEST {
 	 * Constructor
 	 */
 	public function __construct() { 
-		$this->options = array( 
-			'offline_mode' 	=> get_option( 'tonjoo_pwa_offline_mode' ), 
-			'assets' 		=> get_option( 'tonjoo_pwa_assets' ), 
-			'manifest' 		=> get_option( 'tonjoo_pwa_manifest' ), 
-			'lazyload' 		=> get_option( 'tonjoo_pwa_lazy_load' ) 
-		);
+		$this->options = get_option( 'pwa_optimizer' );
 
-		if( isset( $this->options['manifest']['status'] ) && 'on' == $this->options['manifest']['status'] ){ 
+		if( 'on' == $this->options['manifest']['status'] ){ 
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
 			add_action( 'wp_head', array( $this, 'addLinkToHead' ), 10 );
 			add_action( 'wp_footer', array( $this, 'install_prompt' ), 20 );
 
-			add_action( 'add_option_tonjoo_pwa_manifest', array( $this, 'added_option' ), 10, 2 );
-			add_action( 'update_option_tonjoo_pwa_manifest', array( $this, 'updated_option' ), 10, 3 );
+			// add_action( 'add_option_pwa_optimizer', array( $this, 'added_option' ), 10, 2 );
+			add_action( 'update_option_pwa_optimizer', array( $this, 'updated_option' ), 10, 3 );
 		}
 	}
 
@@ -84,127 +79,44 @@ class TONJOO_PWA_MANIFEST {
 	}
 
 	public function added_option( $option, $value ){
-		$this->render_manifest( $value );
+		$this->render_manifest( $value['manifest'] );
 	}
 
 	public function updated_option( $old_value, $new_value, $option ){
-		$this->render_manifest( $new_value );
+		$this->render_manifest( $new_value['manifest'] );
 	}
 
 	public function render_manifest($value){
-		global $wp_query;
+		$app_name = isset($value['app_name']) ? $value['app_name'] : '';
+		$short_name = isset($value['short_name']) ? $value['short_name'] : '';
+		$app_description = isset($value['app_description']) ? $value['app_description'] : '';
+		$start_url = isset($value['start_url']) ? $value['start_url'] : '';
+		$theme_color = isset($value['theme_color']) ? $value['theme_color'] : '';
+		$bg_color = isset($value['background_color']) ? $value['background_color'] : '';
 
-		$app_name 			= get_bloginfo('name');
-		$short_name 		= get_bloginfo('name');
-		$icons 				= [];
-		$app_description 	= get_bloginfo('description');
-		$start_url 			= get_bloginfo('url');
-		$orientation 		= 'portrait';
-		$theme_color 		= '#ffffff';
-		$bg_color 			= '#ffffff';
-		$related_apps 		= [];
+		$icons = [];
+		if( isset($value['icons']) && is_array($value['icons']) && ! empty($value['icons']) ){ 
+			foreach ($value['icons'] as $k => $v) {
+				$size = str_replace( 'logo_', '', $k );
 
-		if( isset( $value['app_name'] ) && !empty( $value['app_name'] ) ){ 
-			$app_name = $value['app_name'];
+				$icons[] = array( 
+					'src' 	=> $v, 
+					'type' 	=> 'image/png', 
+					'sizes' => sprintf( '%dx%d', $size, $size ) 
+				);
+			}
 		}
 
-		if( isset( $value['short_name'] ) && !empty( $value['short_name'] ) ){ 
-			$short_name = $value['short_name'];
-		}
-
-		if( isset( $value['logo_48'] ) && !empty( $value['logo_48'] ) ){ 
-			$icons[] = array( 
-				'src' => $value['logo_48'], 
-				'type' => 'image/png', 
-				'sizes' => '48x48' 
-			);
-		}
-
-		if( isset( $value['logo_48'] ) && !empty( $value['logo_48'] ) ){ 
-			$icons[] = array( 
-				'src' => $value['logo_48'], 
-				'type' => 'image/png', 
-				'sizes' => '96x96' 
-			);
-		}
-
-		if( isset( $value['logo_128'] ) && !empty( $value['logo_128'] ) ){ 
-			$icons[] = array( 
-				'src' => $value['logo_128'], 
-				'type' => 'image/png', 
-				'sizes' => '128x128' 
-			);
-		}
-
-		if( isset( $value['logo_144'] ) && !empty( $value['logo_144'] ) ){ 
-			$icons[] = array( 
-				'src' => $value['logo_144'], 
-				'type' => 'image/png', 
-				'sizes' => '144x144' 
-			);
-		}
-
-		if( isset( $value['logo_152'] ) && !empty( $value['logo_152'] ) ){ 
-			$icons[] = array( 
-				'src' => $value['logo_152'], 
-				'type' => 'image/png', 
-				'sizes' => '152x152' 
-			);
-		}
-
-		if( isset( $value['logo_192'] ) && !empty( $value['logo_192'] ) ){ 
-			$icons[] = array( 
-				'src' => $value['logo_192'], 
-				'type' => 'image/png', 
-				'sizes' => '192x192' 
-			);
-		}
-
-		if( isset( $value['logo_256'] ) && !empty( $value['logo_256'] ) ){ 
-			$icons[] = array( 
-				'src' => $value['logo_256'], 
-				'type' => 'image/png', 
-				'sizes' => '256x256' 
-			);
-		}
-
-		if( isset( $value['logo_384'] ) && !empty( $value['logo_384'] ) ){ 
-			$icons[] = array( 
-				'src' => $value['logo_384'], 
-				'type' => 'image/png', 
-				'sizes' => '384x384' 
-			);
-		}
-
-		if( isset( $value['logo_512'] ) && !empty( $value['logo_512'] ) ){ 
-			$icons[] = array( 
-				'src' => $value['logo_512'], 
-				'type' => 'image/png', 
-				'sizes' => '512x512' 
-			);
-		}
-
-		if( isset( $value['app_description'] ) && !empty( $value['app_description'] ) ){ 
-			$app_description = $value['app_description'];
-		}
-
-		if( isset( $value['start_url'] ) && !empty( $value['start_url'] ) ){ 
-			$start_url = $value['start_url'];
-		}
-
-		if( isset( $value['theme_color'] ) && !empty( $value['theme_color'] ) ){ 
-			$theme_color = $value['theme_color'];
-		}
-
-		if( isset( $value['background_color'] ) && !empty( $value['background_color'] ) ){ 
-			$bg_color = $value['background_color'];
-		}
-
-		if( isset( $value['mobile_apps'] ) && !empty( $value['mobile_apps'] ) ){ 
-			$related_apps[] = array( 
-				'platform' => 'play', 
-				'id' => $value['mobile_apps'] 
-			);
+		$related_apps = [];
+		if( isset($value['related_apps']) && is_array($value['related_apps']) && ! empty($value['related_apps']) ){ 
+			foreach ($value['related_apps'] as $app) {
+				if( ! empty($app['platform']) || ! empty($app['id']) ){
+					$related_apps[] = array( 
+						'platform' => $app['platform'], 
+						'id' => $app['id'] 
+					);
+				}
+			}
 		}
 
 		$response = array( 
@@ -213,8 +125,8 @@ class TONJOO_PWA_MANIFEST {
 			"icons" 				=> $icons, 
 			"description" 			=> $app_description, 
 			"start_url" 			=> $start_url, 
-			"display" 				=> "standalone", 
-			"orientation" 			=> $orientation, 
+			"display" 				=> 'standalone', 
+			"orientation" 			=> 'portrait', 
 			"theme_color" 			=> $theme_color, 
 			"background_color" 		=> $bg_color, 
 			"related_applications" 	=> $related_apps 
