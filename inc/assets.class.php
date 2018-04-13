@@ -35,23 +35,18 @@ class TONJOO_PWA_ASSETS {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->options = array( 
-			'offline_mode' 	=> get_option( 'tonjoo_pwa_offline_mode' ), 
-			'assets' 		=> get_option( 'tonjoo_pwa_assets' ), 
-			'manifest' 		=> get_option( 'tonjoo_pwa_manifest' ), 
-			'lazyload' 		=> get_option( 'tonjoo_pwa_lazy_load' ) 
-		);
+		$this->options = get_option( 'pwa_optimizer' );
 
-		add_action( 'add_option_tonjoo_pwa_assets', array( $this, 'added_option' ), 10, 2 );
-		add_action( 'update_option_tonjoo_pwa_assets', array( $this, 'updated_option' ), 10, 3 );
+		// add_action( 'add_option_pwa_optimizer', array( $this, 'added_option' ), 10, 2 );
+		add_action( 'update_option_pwa_optimizer', array( $this, 'updated_option' ), 10, 3 );
 	}
 
 	public function added_option( $option, $value ) { 
-		$this->render_service_worker($value);
+		$this->render_service_worker($value['assets']);
 	}
 
 	public function updated_option( $old_value, $new_value, $option ) { 
-		$this->render_service_worker($new_value);
+		$this->render_service_worker($new_value['assets']);
 	}
 
 	public function render_service_worker($new_value) { 
@@ -126,15 +121,12 @@ EOT;
 EOT;
 		}
 
-		$revision = 'eee43012';
-		if( isset($this->options['offline_mode']['offline_page']) && ! empty( $this->options['offline_mode']['offline_page'] ) ){
-			$revision = md5( $this->options['offline_mode']['offline_page'] );
-		}
+		$revision = md5( $this->options['offline_mode']['offline_page'] );
 
 		$precache 		= '';
 		$offline_script = '';
 
-		if( isset($this->options['offline_mode']['status']) && 'on' == $this->options['offline_mode']['status'] ){
+		if( 'on' == $this->options['offline_mode']['status'] ){
 			$precache = <<< EOT
 workbox.precaching.precacheAndRoute([
 		{ 

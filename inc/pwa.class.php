@@ -33,16 +33,11 @@ class TONJOO_PWA {
 	 * Constructor
 	 */
 	public function __construct() { 
-		$this->options = array( 
-			'offline_mode' 	=> get_option( 'tonjoo_pwa_offline_mode' ), 
-			'assets' 		=> get_option( 'tonjoo_pwa_assets' ), 
-			'manifest' 		=> get_option( 'tonjoo_pwa_manifest' ), 
-			'lazyload' 		=> get_option( 'tonjoo_pwa_lazy_load' ) 
-		);
+		$this->options = get_option( 'pwa_optimizer' );
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
-		if( ( isset($this->options['offline_mode']['status']) && 'on' == $this->options['offline_mode']['status'] ) || ( isset($this->options['assets']['status']) && 'on' == $this->options['assets']['status'] ) ){ 
+		if( 'on' == $this->options['offline_mode']['status'] || 'on' == $this->options['assets']['status'] ){ 
 			add_action( 'wp_footer', array( $this, 'install_service_worker' ), 20 );
 		}
 	}

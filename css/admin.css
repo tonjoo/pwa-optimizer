@@ -35,3 +35,42 @@ table.tonjoo-pwa-permissions td {
 .tonjoo-pwa-permissions .is-readable {
 	background-color: #FD6D73;
 }
+
+.tabbed-content {
+	margin-bottom: 30px;    
+}
+.tabbed-content .inner-content {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	padding: 15px;
+}
+.tabbed-content > .tab-pane > .tab-item {
+	margin-bottom: 0;
+	margin-top: -28px;
+}
+.tabbed-content > .tab-pane > .tab-item .menu.active {
+	border-color: #ddd;
+}
+.tabbed-content .tabbed-mode {
+	background-color: #fff;
+	padding: 15px;
+	border: 1px solid #ddd;
+}
+.tabbed-content .tab-pane {
+	display: none;
+	-webkit-transition: all 0.2s ease-out;
+       -moz-transition: all 0.2s ease-out;
+         -o-transition: all 0.2s ease-out;
+			transition: all 0.2s ease-out;
+}
+.tabbed-content .tab-pane.active {
+	display: block;
+}
+
+.pwa_optimizer .metaboxholder {
+	padding-bottom: 10px;
+}
+
+td .list {
+	margin-bottom: 20px;
+}

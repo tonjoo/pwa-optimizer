@@ -35,14 +35,9 @@ class TONJOO_PWA_LAZYLOAD {
 	 * Constructor
 	 */
 	public function __construct() { 
-		$this->options = array( 
-			'offline_mode' 	=> get_option( 'tonjoo_pwa_offline_mode' ), 
-			'assets' 		=> get_option( 'tonjoo_pwa_assets' ), 
-			'manifest' 		=> get_option( 'tonjoo_pwa_manifest' ), 
-			'lazyload' 		=> get_option( 'tonjoo_pwa_lazy_load' ) 
-		);
+		$this->options = get_option( 'pwa_optimizer' );
 
-		if( isset($this->options['lazyload']['status']) && 'on' == $this->options['lazyload']['status'] ){
+		if( 'on' == $this->options['lazyload']['status'] ){
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
 			// plugin hook
@@ -69,8 +64,8 @@ class TONJOO_PWA_LAZYLOAD {
 	}
 
 	public function localize_data($data) { 
-		$rootMargin = isset($this->options['lazyload']['root_margin']) ? intval($this->options['lazyload']['root_margin']) : 0;
-		$threshold = isset($this->options['lazyload']['threshold']) ? intval($this->options['lazyload']['threshold']) : 0;
+		$rootMargin = intval($this->options['lazyload']['root_margin']);
+		$threshold = intval($this->options['lazyload']['threshold']);
 
 		$data['intersection_observer'] = array( 
 			'root_margin' => $rootMargin, 
@@ -87,10 +82,10 @@ class TONJOO_PWA_LAZYLOAD {
 	public function shortcode_callback($atts, $content=null) {
 		$args =  shortcode_atts( array(
 			'type' 		=> 'image', 
-			'src' 		=> isset($this->options['lazyload']['preload_image']) ? $this->options['lazyload']['preload_image'] : '', 
+			'src' 		=> $this->options['lazyload']['preload_image'], 
 			'alt' 		=> '', 
 			'id' 		=> '', 
-			'class' 	=> isset($this->options['lazyload']['css_class']) ? $this->options['lazyload']['css_class'] : '', 
+			'class' 	=> $this->options['lazyload']['css_class'], 
 			'style' 	=> '', 
 			'width' 	=> '', 
 			'height' 	=> '' 
@@ -164,7 +159,8 @@ class TONJOO_PWA_LAZYLOAD {
 		if ( defined('DOING_AJAX') && DOING_AJAX ) 
 			return $html;
 
-		$options = get_option( 'tonjoo_pwa_lazy_load' );
+		$pwa_optimizer = get_option( 'pwa_optimizer' );
+		$options = isset( $pwa_optimizer['lazyload'] ) ? $pwa_optimizer['lazyload'] : array();
 
 		$matches = array();
 
@@ -215,7 +211,8 @@ class TONJOO_PWA_LAZYLOAD {
 		if ( defined('DOING_AJAX') && DOING_AJAX ) 
 			return $html;
 
-		$options = get_option( 'tonjoo_pwa_lazy_load' );
+		$pwa_optimizer = get_option( 'pwa_optimizer' );
+		$options = isset( $pwa_optimizer['lazyload'] ) ? $pwa_optimizer['lazyload'] : array();
 
 		$matches = array();
 
