@@ -207,7 +207,7 @@ final class TONJOO_PWA_FACTORY {
 
 		if( ! isset($options['offline_mode']) ) {
 			$options['offline_mode']['status'] = 'on';
-			$options['offline_mode']['offline_page'] = file_get_contents( tonjoo_pwa()->plugin_url() . '/src/offline-page.html' );
+			$options['offline_mode']['offline_page'] = file_get_contents( $this->plugin_url() . '/src/offline-page.html' );
 		}
 
 		if( ! isset($options['assets']) ) {
