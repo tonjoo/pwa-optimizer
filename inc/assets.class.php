@@ -34,7 +34,7 @@ class TONJOO_PWA_ASSETS {
 	/**
 	 * Constructor
 	 */
-	public function __construct() {
+	public function __construct() { 
 		$this->options = get_option( 'pwa_optimizer' );
 
 		// add_action( 'add_option_pwa_optimizer', array( $this, 'added_option' ), 20, 2 );
