@@ -34,19 +34,19 @@ class TONJOO_PWA_ASSETS {
 	/**
 	 * Constructor
 	 */
-	public function __construct() {
+	public function __construct() { 
 		$this->options = get_option( 'pwa_optimizer' );
 
-		// add_action( 'add_option_pwa_optimizer', array( $this, 'added_option' ), 10, 2 );
-		add_action( 'update_option_pwa_optimizer', array( $this, 'updated_option' ), 10, 3 );
+		// add_action( 'add_option_pwa_optimizer', array( $this, 'added_option' ), 20, 2 );
+		add_action( 'update_option_pwa_optimizer', array( $this, 'updated_option' ), 20, 3 );
 	}
 
 	public function added_option( $option, $value ) { 
-		$this->render_service_worker($value['assets']);
+		$this->render_service_worker($value);
 	}
 
 	public function updated_option( $old_value, $new_value, $option ) { 
-		$this->render_service_worker($new_value['assets']);
+		$this->render_service_worker($new_value);
 	}
 
 	public function render_service_worker($new_value) { 
@@ -59,14 +59,14 @@ class TONJOO_PWA_ASSETS {
 		$pgcache_reject 	= '';
 		$precache_assets 	= '';
 
-		if( isset($new_value['status']) && 'on' == $new_value['status'] ){
+		if( isset($new_value['assets']['status']) && 'on' == $new_value['assets']['status'] ){
 			$pgcache_reject = <<< EOT
 workbox.routing.registerRoute(/wp-admin(.*)|(.*)preview=true(.*)/,
 		workbox.strategies.networkOnly()
 	);
 EOT;
-			if( isset($new_value['pgcache_reject_uri']) && ! empty( $new_value['pgcache_reject_uri'] ) ){
-				$pgcache_reject_uri = explode( "\n", $new_value['pgcache_reject_uri'] );
+			if( isset($new_value['assets']['pgcache_reject_uri']) && ! empty( $new_value['assets']['pgcache_reject_uri'] ) ){
+				$pgcache_reject_uri = explode( "\n", $new_value['assets']['pgcache_reject_uri'] );
 				if( $pgcache_reject_uri ) {
 					foreach ($pgcache_reject_uri as $key => $value) {
 						$pgcache_reject .= <<< EOT
@@ -121,12 +121,12 @@ EOT;
 EOT;
 		}
 
-		$revision = md5( $this->options['offline_mode']['offline_page'] );
+		$revision = md5( $new_value['offline_mode']['offline_page'] );
 
 		$precache 		= '';
 		$offline_script = '';
 
-		if( 'on' == $this->options['offline_mode']['status'] ){
+		if( 'on' == $new_value['offline_mode']['status'] ){
 			$precache = <<< EOT
 workbox.precaching.precacheAndRoute([
 		{ 
