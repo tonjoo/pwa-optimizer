@@ -46,7 +46,7 @@ $files = array(
 							<td>
 								<select name="pwa_optimizer[offline_mode][status]" class="regular">
 									<option value="on" <?php selected( $offline_mode['status'], 'on', true ); ?>><?php _e( 'Enable', 'tonjoo' ); ?></option>
-									<option value="off" <?php selected( '', 'off', true ); ?>><?php _e( 'Disable', 'tonjoo' ); ?></option>
+									<option value="off" <?php selected( $offline_mode['status'], 'off', true ); ?>><?php _e( 'Disable', 'tonjoo' ); ?></option>
 								</select>
 							</td>
 						</tr>
