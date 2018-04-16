@@ -37,14 +37,14 @@ class TONJOO_PWA_MANIFEST {
 	public function __construct() { 
 		$this->options = get_option( 'pwa_optimizer' );
 
+		// add_action( 'add_option_pwa_optimizer', array( $this, 'added_option' ), 20, 2 );
+		add_action( 'update_option_pwa_optimizer', array( $this, 'updated_option' ), 20, 3 );
+
 		if( 'on' == $this->options['manifest']['status'] ){ 
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
 			add_action( 'wp_head', array( $this, 'addLinkToHead' ), 10 );
 			add_action( 'wp_footer', array( $this, 'install_prompt' ), 20 );
-
-			// add_action( 'add_option_pwa_optimizer', array( $this, 'added_option' ), 10, 2 );
-			add_action( 'update_option_pwa_optimizer', array( $this, 'updated_option' ), 10, 3 );
 		}
 	}
 

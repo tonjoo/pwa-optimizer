@@ -37,24 +37,18 @@ class TONJOO_PWA_OFFLINE_MODE {
 	public function __construct() {
 		$this->options = get_option( 'pwa_optimizer' );
 
-		// add_action( 'add_option_pwa_optimizer', array( $this, 'added_option' ), 10, 2 );
-		add_action( 'update_option_pwa_optimizer', array( $this, 'updated_option' ), 10, 3 );
+		// add_action( 'add_option_pwa_optimizer', array( $this, 'added_option' ), 20, 2 );
+		add_action( 'update_option_pwa_optimizer', array( $this, 'updated_option' ), 20, 3 );
 	}
 
 	public function added_option( $option, $value ) { 
-		if( ! isset($value['offline_mode']) ) 
-			return;
-
-		$this->render_service_worker( $value['offline_mode'] );
-		$this->render_offline_page( $value['offline_mode'] );
+		$this->render_service_worker( $value );
+		$this->render_offline_page( $value );
 	}
 
 	public function updated_option( $old_value, $new_value, $option ) { 
-		if( ! isset($new_value['offline_mode']) ) 
-			return;
-
-		$this->render_service_worker( $new_value['offline_mode'] );
-		$this->render_offline_page( $new_value['offline_mode'] );
+		$this->render_service_worker( $new_value );
+		$this->render_offline_page( $new_value );
 	}
 
 	public function render_service_worker($new_value) { 
@@ -67,14 +61,14 @@ class TONJOO_PWA_OFFLINE_MODE {
 		$pgcache_reject 	= '';
 		$precache_assets 	= '';
 
-		if( 'on' == $this->options['assets']['status'] ){
+		if( 'on' == $new_value['assets']['status'] ){
 			$pgcache_reject = <<< EOT
 workbox.routing.registerRoute(/wp-admin(.*)|(.*)preview=true(.*)/,
 		workbox.strategies.networkOnly()
 	);
 EOT;
-			if( ! empty( $this->options['assets']['pgcache_reject_uri'] ) ){
-				$pgcache_reject_uri = explode( "\n", $this->options['assets']['pgcache_reject_uri'] );
+			if( ! empty( $new_value['assets']['pgcache_reject_uri'] ) ){
+				$pgcache_reject_uri = explode( "\n", $new_value['assets']['pgcache_reject_uri'] );
 				if( $pgcache_reject_uri ) {
 					foreach ($pgcache_reject_uri as $key => $value) {
 						$pgcache_reject .= <<< EOT
@@ -132,8 +126,8 @@ EOT;
 		$precache 		= '';
 		$offline_script = '';
 
-		$revision = isset($new_value['offline_page']) ? md5( $new_value['offline_page'] ): md5( $this->options['offline_mode']['offline_page'] );
-		if( isset($new_value['status']) && 'on' == $new_value['status'] ){
+		$revision = isset($new_value['offline_mode']['offline_page']) ? md5( $new_value['offline_mode']['offline_page'] ): md5( $new_value['offline_mode']['offline_mode']['offline_page'] );
+		if( isset($new_value['offline_mode']['status']) && 'on' == $new_value['offline_mode']['status'] ){
 			$precache = <<< EOT
 workbox.precaching.precacheAndRoute([
 		{ 
@@ -179,7 +173,7 @@ EOT;
 	}
 
 	public function render_offline_page($value) { 
-		$offline_page = $value['offline_page'];
+		$offline_page = $value['offline_mode']['offline_page'];
 
 		$filename = get_home_path() . 'offline-page.html';
 
