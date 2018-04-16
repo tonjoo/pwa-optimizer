@@ -12,7 +12,7 @@
 - [pwa-optimizer-lazyload]
 
 ### Shortcode Attribute
-- **type** (optional), *image* or *iframe*. (Default image)
+- **type** (optional), *image* or *iframe*. (Default: image)
 - **src** (required), source
 - **alt** (optional), alt image attribute if type is image
 - **id** (optional), attribute id
