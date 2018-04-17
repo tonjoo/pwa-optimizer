@@ -108,7 +108,7 @@ class TONJOO_PWA_LAZYLOAD {
 		}
 
 		if( !empty( str_replace("&quot;", "", $args['class'] ) ) ) { 
-			$attr['class'] = 'lazy-hidden' . str_replace("&quot;", "", $args['class'] );
+			$attr['class'] = 'lazy-hidden ' . str_replace("&quot;", "", $args['class'] );
 		} else { 
 			$attr['class'] = 'lazy-hidden';
 		}
