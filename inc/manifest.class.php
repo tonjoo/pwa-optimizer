@@ -41,7 +41,7 @@ class TONJOO_PWA_MANIFEST {
 		add_action( 'update_option_pwa_optimizer', array( $this, 'updated_option' ), 20, 3 );
 
 		if( 'on' == $this->options['manifest']['status'] ){ 
-			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 20 );
 
 			add_action( 'wp_head', array( $this, 'addLinkToHead' ), 10 );
 			add_action( 'wp_footer', array( $this, 'install_prompt' ), 20 );

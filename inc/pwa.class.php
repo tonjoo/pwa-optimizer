@@ -35,7 +35,7 @@ class TONJOO_PWA {
 	public function __construct() { 
 		$this->options = get_option( 'pwa_optimizer' );
 
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 20 );
 
 		if( 'on' == $this->options['offline_mode']['status'] || 'on' == $this->options['assets']['status'] ){ 
 			add_action( 'wp_footer', array( $this, 'install_service_worker' ), 20 );
