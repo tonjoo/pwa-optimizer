@@ -38,7 +38,7 @@ class TONJOO_PWA_LAZYLOAD {
 		$this->options = get_option( 'pwa_optimizer' );
 
 		if( 'on' == $this->options['lazyload']['status'] ){
-			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 20 );
 
 			// plugin hook
 			add_filter( 'tonjoo_pwa_localize_data', array( $this, 'localize_data' ) );
@@ -108,7 +108,7 @@ class TONJOO_PWA_LAZYLOAD {
 		}
 
 		if( !empty( str_replace("&quot;", "", $args['class'] ) ) ) { 
-			$attr['class'] = 'lazy-hidden' . str_replace("&quot;", "", $args['class'] );
+			$attr['class'] = 'lazy-hidden ' . str_replace("&quot;", "", $args['class'] );
 		} else { 
 			$attr['class'] = 'lazy-hidden';
 		}
