@@ -39,6 +39,7 @@ class TONJOO_PWA_LAZYLOAD {
 
 		if( 'on' == $this->options['lazyload']['status'] ){
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 20 );
+			// add_filter( 'script_loader_tag', array( $this, 'add_defer' ), 10, 2 );
 
 			// plugin hook
 			add_filter( 'tonjoo_pwa_localize_data', array( $this, 'localize_data' ) );
@@ -61,6 +62,21 @@ class TONJOO_PWA_LAZYLOAD {
 	public function enqueue_scripts() { 
 		wp_register_script( 'tonjoo-pwa-lazyload', tonjoo_pwa()->plugin_url() . '/js/lazyload.js', array( 'jquery' ), '', true );
 		wp_enqueue_script( 'tonjoo-pwa-lazyload' );
+	}
+
+	public function add_defer($tag, $handle) { 
+
+		$deferred = array( 
+			'tonjoo-pwa-lazyload' 
+		);
+
+		if ( in_array($handle, $deferred) ) { 
+			if( false === stripos($tag, ' defer ') ){
+				return str_replace( ' src', ' defer src', $tag );
+			}
+		}
+
+		return $tag;
 	}
 
 	public function localize_data($data) { 
