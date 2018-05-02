@@ -255,15 +255,21 @@ final class TONJOO_PWA_FACTORY {
 		if( 'on' == $options['assets']['status'] ){
 			if( ! empty( $options['assets']['pgcache_reject_uri'] ) ){
 				$pgcache_reject_uri = explode( "\n", $options['assets']['pgcache_reject_uri'] );
-				if( $pgcache_reject_uri ) {
+				if( $pgcache_reject_uri ){
 					foreach ($pgcache_reject_uri as $key => $value) {
-						$pgcache_reject .= <<< EOT
-\n
+						// remove new lines from string
+						$value = trim( preg_replace('/\s+/', ' ', $value) );
+
+						$pgcache_reject[] = <<< EOT
 	workbox.routing.registerRoute($value, workbox.strategies.networkOnly());
 EOT;
 					}
 				}
-			} 
+			}
+
+			if( is_array($pgcache_reject) && ! empty($pgcache_reject) ){
+				$pgcache_reject = implode("\n", $pgcache_reject);
+			}
 
 			$precache_assets = <<< EOT
 // Stale while revalidate for JS and CSS that are not precache
@@ -343,7 +349,7 @@ if (workbox) {
 
 	{$precache}
 
-	{$pgcache_reject}
+{$pgcache_reject}
 
 	{$precache_assets}
 

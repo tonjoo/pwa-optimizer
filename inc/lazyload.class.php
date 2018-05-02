@@ -70,7 +70,7 @@ class TONJOO_PWA_LAZYLOAD {
 			'tonjoo-pwa-lazyload' 
 		);
 
-		if ( in_array($handle, $deferred) ) { 
+		if( in_array($handle, $deferred) ){ 
 			if( false === stripos($tag, ' defer ') ){
 				return str_replace( ' src', ' defer src', $tag );
 			}
