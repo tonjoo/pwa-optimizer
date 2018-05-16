@@ -62,21 +62,22 @@ class TONJOO_PWA_OFFLINE_MODE {
 		$precache_assets 	= '';
 
 		if( 'on' == $new_value['assets']['status'] ){
-			$pgcache_reject = <<< EOT
-workbox.routing.registerRoute(/wp-admin(.*)|(.*)preview=true(.*)/,
-		workbox.strategies.networkOnly()
-	);
-EOT;
 			if( ! empty( $new_value['assets']['pgcache_reject_uri'] ) ){
 				$pgcache_reject_uri = explode( "\n", $new_value['assets']['pgcache_reject_uri'] );
-				if( $pgcache_reject_uri ) {
-					foreach ($pgcache_reject_uri as $key => $value) {
-						$pgcache_reject .= <<< EOT
-\n
+				if( $pgcache_reject_uri ){
+					foreach ($pgcache_reject_uri as $key => $value) { 
+						// remove new lines from string
+						$value = trim( preg_replace('/\s+/', ' ', $value) );
+
+						$pgcache_reject[] = <<< EOT
 	workbox.routing.registerRoute($value, workbox.strategies.networkOnly());
 EOT;
 					}
 				}
+			}
+
+			if( is_array($pgcache_reject) && ! empty($pgcache_reject) ){
+				$pgcache_reject = implode("\n", $pgcache_reject);
 			}
 
 			$precache_assets = <<< EOT
@@ -156,7 +157,7 @@ if (workbox) {
 
 	{$precache}
 
-	{$pgcache_reject}
+{$pgcache_reject}
 
 	{$precache_assets}
 
