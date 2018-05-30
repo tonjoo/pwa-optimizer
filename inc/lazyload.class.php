@@ -143,6 +143,8 @@ class TONJOO_PWA_LAZYLOAD {
 			$attr['height'] = str_replace("&quot;", "", $args['height'] );
 		}
 
+		$attr = wp_parse_args( $attr, $atts );
+
 		ob_start();
 
 		if( 'iframe' == $type ) { 
