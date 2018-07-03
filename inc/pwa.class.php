@@ -49,9 +49,21 @@ class TONJOO_PWA {
 		wp_register_style( 'tonjoo-pwa', tonjoo_pwa()->plugin_url() . '/css/style.css', array(), false );
 		wp_register_script( 'tonjoo-pwa', tonjoo_pwa()->plugin_url() . '/js/scripts.js', array( 'jquery' ), '', false );
 
+		$url_sw = home_url('sw.js');
+		// check if plugin WPML Multilingual CMS is active
+		if ( in_array( 'sitepress-multilingual-cms/sitepress.php', apply_filters( 'active_plugins', get_option( 'active_plugins', array() ) ), true ) ) {
+			if ( function_exists('icl_object_id') ) {
+				$my_default_lang 	= apply_filters('wpml_default_language', NULL );
+        		$site_url 			= apply_filters( 'wpml_permalink', home_url(), $my_default_lang ); 
+				$url_sw 			= $site_url .'/sw.js';
+			}
+		} else if ( in_array( 'polylang/polylang.php', apply_filters( 'active_plugins', get_option( 'active_plugins', array() ) ), true ) ) { //check if plugin polylang is active
+			// nothing
+		}
+
 		$localize_data = apply_filters( 'tonjoo_pwa_localize_data', array( 
 			'ajaxurl' 			=> admin_url( 'admin-ajax.php' ), 
-			'service_worker' 	=> home_url('sw.js') 
+			'service_worker' 	=> $url_sw 
 		) );
 		wp_localize_script( 'tonjoo-pwa', 'TONJOO_PWA', $localize_data );
 
