@@ -54,7 +54,7 @@ class TONJOO_PWA_MANIFEST {
 	public function enqueue_scripts() {}
 
 	public function addLinkToHead(){
-		echo '<link rel="manifest" href="'.home_url('manifest.json').'">';
+		echo '<link rel="manifest" href="'.pwa_get_home_url().'/manifest.json">';
 	}
 
 	public function install_prompt() { 

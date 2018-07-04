@@ -51,7 +51,7 @@ class TONJOO_PWA {
 
 		$localize_data = apply_filters( 'tonjoo_pwa_localize_data', array( 
 			'ajaxurl' 			=> admin_url( 'admin-ajax.php' ), 
-			'service_worker' 	=> home_url('sw.js') 
+			'service_worker' 	=> pwa_get_home_url().'/sw.js' 
 		) );
 		wp_localize_script( 'tonjoo-pwa', 'TONJOO_PWA', $localize_data );
 
