@@ -138,6 +138,7 @@ final class TONJOO_PWA_FACTORY {
 	 */
 	public function includes() {
 		// all public includes
+		include_once( 'inc/function.php' );
 		include_once( 'inc/manifest.class.php' );
 		include_once( 'inc/offline-mode.class.php' );
 		include_once( 'inc/assets.class.php' );

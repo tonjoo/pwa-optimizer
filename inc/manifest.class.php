@@ -54,18 +54,7 @@ class TONJOO_PWA_MANIFEST {
 	public function enqueue_scripts() {}
 
 	public function addLinkToHead(){
-		$url_manifest = home_url('manifest.json');
-		// check if plugin WPML Multilingual CMS is active
-		if ( in_array( 'sitepress-multilingual-cms/sitepress.php', apply_filters( 'active_plugins', get_option( 'active_plugins', array() ) ), true ) ) {
-			if ( function_exists('icl_object_id') ) {
-				$my_default_lang 	= apply_filters('wpml_default_language', NULL );
-        		$site_url 			= apply_filters( 'wpml_permalink', home_url(), $my_default_lang ); 
-				$url_manifest 		= $site_url .'/manifest.json';
-			}
-		} else if ( in_array( 'polylang/polylang.php', apply_filters( 'active_plugins', get_option( 'active_plugins', array() ) ), true ) ) { //check if plugin polylang is active
-			// nothing
-		}
-		echo '<link rel="manifest" href="'.$url_manifest.'">';
+		echo '<link rel="manifest" href="'.pwa_get_home_url().'/manifest.json">';
 	}
 
 	public function install_prompt() { 
