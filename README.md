@@ -29,13 +29,13 @@ Method 1:
 
 1. Open Inspect Element
 2. Select Aplication tab (inside >> button)
-3. Select "Service Workers" menu ![service worker menu](https://image.ibb.co/kxPrBd/menu_service_worker.png "service worker menu")
-4. Check 'Update on reload` ![Update on reload](https://image.ibb.co/jarcjy/update_on_reload_service_worker.png "Update on reload")
+3. Select "Service Workers" menu
+4. Check 'Update on reload`
 5. Refresh your page using Ctrl+F5
 
 Method 2:
 
 1. Open Inspect Element
 2. Select Aplication tab (inside >> button)
-3. Select "Service Workers" menu ![service worker menu](https://image.ibb.co/kxPrBd/menu_service_worker.png "service worker menu")
-4. Click `update` on desired service workers installed on your Chrome ![update service worker](https://image.ibb.co/fzZxjy/update_service_worker.png "update service worker")
+3. Select "Service Workers" menu
+4. Click `update` on desired service workers installed on your Chrome
