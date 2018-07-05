@@ -23,7 +23,7 @@
 
 ## Development
 - In development mode to get updated manifest.json file by pressing Ctrl + F5 key
-- In development mode to get updated service worker files, check 'Update on reload` or click `update` on the updated service worker
+- In development mode to get updated service worker files, check `Update on reload` or click `update` on the updated service worker
 
 ```
 Method 1:
