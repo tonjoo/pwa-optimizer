@@ -21,21 +21,21 @@
 - **width** (optional), attribute width
 - **height** (optional), attribute height
 
-## Development
-- In development mode to get updated manifest.json file by pressing Ctrl + F5 key
-- In development mode to get updated service worker files, check `Update on reload` or click `update` on the updated service worker
+## Development & Testing Notes
 
-```
+To make sure expected changes on sw.js applied on your Chrome browser, please do one of two methods below after the changes:
+
 Method 1:
-1. Press the F12 key or press Ctrl + Shift + i  
-2. Select the Application tab
-3. Select the service worker menu
-4. Check 'Update on reload`
-5. Press Ctrl + F5
+
+1. Open Inspect Element
+2. Select Aplication tab (inside >> button)
+3. Select "Service Workers" menu ![service worker menu](https://image.ibb.co/kxPrBd/menu_service_worker.png "service worker menu")
+4. Check 'Update on reload` ![Update on reload](https://image.ibb.co/jarcjy/update_on_reload_service_worker.png "Update on reload")
+5. Refresh your page using Ctrl+F5
 
 Method 2:
-1. Press the F12 key or press Ctrl + Shift + i
-2. Select the Application tab
-3. Select the service worker menu
-4. Click `update` on the service worker to be updated
-```
+
+1. Open Inspect Element
+2. Select Aplication tab (inside >> button)
+3. Select "Service Workers" menu ![service worker menu](https://image.ibb.co/kxPrBd/menu_service_worker.png "service worker menu")
+4. Click `update` on desired service workers installed on your Chrome ![update service worker](https://image.ibb.co/fzZxjy/update_service_worker.png "update service worker")
