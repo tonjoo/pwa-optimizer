@@ -129,6 +129,7 @@ class TONJOO_PWA_MANIFEST {
 			"orientation" 			=> 'portrait', 
 			"theme_color" 			=> $theme_color, 
 			"background_color" 		=> $bg_color, 
+			"prefer_related_applications" => ( ! empty($related_apps) ) ? true : false, 
 			"related_applications" 	=> $related_apps 
 		);
 

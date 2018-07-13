@@ -39,7 +39,7 @@ class TONJOO_PWA_LAZYLOAD {
 
 		if( 'on' == $this->options['lazyload']['status'] ){
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 20 );
-			// add_filter( 'script_loader_tag', array( $this, 'add_defer' ), 10, 2 );
+			add_filter( 'script_loader_tag', array( $this, 'add_defer' ), 10, 2 );
 
 			// plugin hook
 			add_filter( 'tonjoo_pwa_localize_data', array( $this, 'localize_data' ) );
