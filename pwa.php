@@ -226,6 +226,7 @@ final class TONJOO_PWA_FACTORY {
 			$options['manifest']['orientation'] = 'portrait';
 			$options['manifest']['theme_color'] = '#ffffff';
 			$options['manifest']['background_color'] = '#ffffff';
+			$options['manifest']['prefer_related_applications'] = 'off';
 			$options['manifest']['related_apps'][] = array( 'platform' => 'play', 'id' => '' );
 		}
 

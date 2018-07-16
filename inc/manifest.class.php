@@ -107,6 +107,8 @@ class TONJOO_PWA_MANIFEST {
 			}
 		}
 
+		$prefer_related_apps = ( isset($value['prefer_related_applications']) && 'on' == $value['prefer_related_applications'] ) ? true : false;
+
 		$related_apps = [];
 		if( isset($value['related_apps']) && is_array($value['related_apps']) && ! empty($value['related_apps']) ){ 
 			foreach ($value['related_apps'] as $app) {
@@ -129,7 +131,7 @@ class TONJOO_PWA_MANIFEST {
 			"orientation" 			=> 'portrait', 
 			"theme_color" 			=> $theme_color, 
 			"background_color" 		=> $bg_color, 
-			"prefer_related_applications" => ( ! empty($related_apps) ) ? true : false, 
+			"prefer_related_applications" => $prefer_related_apps, 
 			"related_applications" 	=> $related_apps 
 		);
 
