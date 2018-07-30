@@ -6,13 +6,14 @@
 
 		// console.log( 'Run IntersectionObserver' );
 
+		rootMargin = '0px';
+		threshold = 0;
 		if( "undefined" !== typeof(TONJOO_PWA) ){
-			rootMargin = TONJOO_PWA.intersection_observer.root_margin+'px';
-			threshold = TONJOO_PWA.intersection_observer.threshold;
+			if( "undefined" !== typeof(TONJOO_PWA.intersection_observer) ){
+				rootMargin = TONJOO_PWA.intersection_observer.root_margin+'px';
+				threshold = TONJOO_PWA.intersection_observer.threshold;
+			}
 		} else {
-			rootMargin = '0px';
-			threshold = 0;
-
 			console.log( 'TONJOO_PWA is not defined.' );
 		}
 
