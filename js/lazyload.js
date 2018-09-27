@@ -6,10 +6,21 @@
 
 		// console.log( 'Run IntersectionObserver' );
 
+		rootMargin = '0px';
+		threshold = 0;
+		if( "undefined" !== typeof(TONJOO_PWA) ){
+			if( "undefined" !== typeof(TONJOO_PWA.intersection_observer) ){
+				rootMargin = TONJOO_PWA.intersection_observer.root_margin+'px';
+				threshold = TONJOO_PWA.intersection_observer.threshold;
+			}
+		} else {
+			console.log( 'TONJOO_PWA is not defined.' );
+		}
+
 		let config = {
 			root: null,
-			rootMargin: TONJOO_PWA.intersection_observer.root_margin+'px',
-			threshold: TONJOO_PWA.intersection_observer.threshold
+			rootMargin: rootMargin,
+			threshold: threshold
 		};
 
 		let observer = new IntersectionObserver(onChange, config);
@@ -32,14 +43,20 @@
 	}
 
 	function loadSource(element) {
-		element.classList.add('fade-in');
-		element.classList.remove('lazy-hidden');
-		if(element.dataset && element.dataset.src) {
-			element.src = element.dataset.src;
-		}
+		if(element.dataset) {
+			if(element.dataset.src) {
+				element.src = element.dataset.src;
+			}
 
-		if(element.dataset && element.dataset.srcset) {
-			element.srcset = element.dataset.srcset;
+			if(element.dataset.srcset) {
+				element.srcset = element.dataset.srcset;
+			}
+
+			element.onload = function() {
+				element.classList.add('fade-in');
+				element.classList.remove('lazy-hidden');
+				element.parentElement.classList.add('fade-in');
+			}
 		}
 	}
 }(jQuery));

@@ -170,6 +170,15 @@ $files = array(
 							</td>
 						</tr>
 						<tr>
+							<th><label for=""><?php _e( 'Prefer Related Apps', 'tonjoo' ); ?></label></th>
+							<td>
+								<select name="pwa_optimizer[manifest][prefer_related_applications]" class="regular">
+									<option value="on" <?php selected( $manifest['prefer_related_applications'], 'on', true ); ?>><?php _e( 'Enable', 'tonjoo' ); ?></option>
+									<option value="off" <?php selected( $manifest['prefer_related_applications'], 'off', true ); ?>><?php _e( 'Disable', 'tonjoo' ); ?></option>
+								</select>
+							</td>
+						</tr>
+						<tr>
 							<th><label for=""><?php _e( 'Related Apps', 'tonjoo' ); ?></label></th>
 							<td>
 								<?php 
