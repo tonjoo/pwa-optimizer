@@ -58,7 +58,7 @@ class TONJOO_PWA_OFFLINE_MODE {
 			unlink($filename);
 		}
 
-		$pgcache_reject 	= '';
+		$pgcache_reject 	= array();
 		$precache_assets 	= '';
 
 		if( 'on' == $new_value['assets']['status'] ){

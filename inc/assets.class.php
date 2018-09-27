@@ -56,7 +56,7 @@ class TONJOO_PWA_ASSETS {
 			unlink($filename);
 		}
 
-		$pgcache_reject 	= '';
+		$pgcache_reject 	= array();
 		$precache_assets 	= '';
 
 		if( isset($new_value['assets']['status']) && 'on' == $new_value['assets']['status'] ){

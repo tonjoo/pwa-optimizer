@@ -250,7 +250,7 @@ final class TONJOO_PWA_FACTORY {
 			unlink($filename);
 		}
 
-		$pgcache_reject 	= '';
+		$pgcache_reject 	= array();
 		$precache_assets 	= '';
 
 		if( 'on' == $options['assets']['status'] ){
