@@ -28,3 +28,22 @@ An array of native applications that are installable by, or accessible to, the u
 - **style** (optional), attribute style
 - **width** (optional), attribute width
 - **height** (optional), attribute height
+
+## Development & Testing Notes
+
+To make sure expected changes on sw.js applied on your Chrome browser, please do one of two methods below after the changes:
+
+Method 1:
+
+1. Open Inspect Element
+2. Select Aplication tab (inside >> button)
+3. Select "Service Workers" menu
+4. Check 'Update on reload`
+5. Refresh your page using Ctrl+F5
+
+Method 2:
+
+1. Open Inspect Element
+2. Select Aplication tab (inside >> button)
+3. Select "Service Workers" menu
+4. Click `update` on desired service workers installed on your Chrome
