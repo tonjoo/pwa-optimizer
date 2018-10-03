@@ -146,6 +146,10 @@ EOT;
 EOT;
 		}
 
+		if( is_array($pgcache_reject) ){
+			$pgcache_reject = implode( "", $pgcache_reject );
+		}
+
 		$script = <<< EOT
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.0.0/workbox-sw.js');
 
